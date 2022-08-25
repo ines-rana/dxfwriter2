@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Μετατροπή κορυφών πολυγώνου σε αρχείο DXF</title>
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Μετατροπή μιας σειράς κορυφών πολυγώνου σε αρχείο DXF." />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
+  <link rel="manifest" href="./images/site.webmanifest">
+
+
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      background-color: #EAEBE7;
+      color: #111;
+      text-align: center;
+      margin-top: 10px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      font-size: 110%;
+      line-height: 1.6em;
+    }
+    
+    .example,
+    pre {
+      font-family: monospace;
+      background-color: #fffff0;
+      overflow: auto;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+    
+    #container {
+      margin: 10px auto;
+      max-width: 990px;
+      color: #111;
+      text-align: left;
+      background: inherit;
+    }
+    
+    #header {
+      width: 99%;
+      padding: 1px;
+      margin-top: 1px;
+      text-align: center;
+      background: inherit
+    }
+    
+    #content {
+      width: 97%;
+      padding: 15px;
+      background-color: #fff;
+      color: #111;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    
+    .addiv {
+      margin: 15px 0;
+      text-align: center;
+    }
+    
+    .fourdiv {
+      width: 25%;
+      float: left;
+      display: inline-block;
+    }
+    
+    .halfdiv {
+      width: 50%;
+      float: left;
+      display: inline-block;
+    }
+    
+    .halfdiv_icon {
+      margin-top: 3rem;
+    }
+
+    .halfdiv_left {
+      width: 60%;
+    }
+    .halfdiv_right {
+      width: 40%;
+    }
+    
+    label {
+      display: block;
+      margin: 2px;
+    }
+    
+    #loading p {
+      margin: 0;
+      color: #777;
+      font-size: 14px;
+    }
+    
+    
+    .tablo {
+      width: 90%;
+      border-collapse: collapse;
+      margin: 1px;
+      vertical-align: top
+    }
+    
+    .tablo th {
+      background-color: #00838f;
+      padding: 3px;
+      color: #fff;
+      text-align: center;
+      border: solid 1px #ccc
+    }
+    
+    .tablo td {
+      padding: 3px;
+      text-align: center;
+      border: solid 1px #ccc;
+    }
+    
+    #footer {
+      font-size: .8em;
+      color: #555;
+      padding: 1px;
+      margin-top: 10px;
+      text-align: center
+    }
+    
+    #baseresult {
+      background-color: #ffffcf;
+      color: #111;
+      border: 1px solid #DDDDDD;
+      line-height: 34px;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      margin-bottom: 15px;
+      min-height: 34px;
+      padding: 10px;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    
+    h1 {
+      color: #111;
+      font-size: 1.6em;
+      margin: 7px 2px
+    }
+    
+    h3 {
+      margin: 15px 0 10px 0
+    }
+    
+    p {
+      margin: 10px 0;
+    }
+    
+    a {
+      color: #06c;
+      text-decoration: none
+    }
+    
+    a:hover {
+      color: #111;
+    }
+    
+    #content form {
+      min-height: 92px;
+      background-color: #F0F8DA;
+      padding: 10px;
+      border: 1px solid #BFCB9C;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+    }
+
+    form#uploadForm {
+      min-height: 0px;
+      background-color: #FFFFFF;
+      padding: 0px;
+      border: 0px;
+      margin-bottom: 0.9rem;
+    }
+    
+    ul {
+      margin: 2px 0 5px 5px;
+      padding-left: 12px;
+    }
+    
+    li {
+      list-style-type: square;
+      margin: 2px 5px;
+    }
+    
+    li a {
+      pading: 3px 0;
+    }
+    
+    img {
+      border: 0
+    }
+    
+    .date {
+      color: #777;
+      display: block;
+      margin-bottom: 10px;
+      font-size: 90%;
+    }
+    
+    input,
+    textarea {
+      font-family: monospace;
+      font-size: 16px;
+      padding: 5px;
+      border: 1px solid #8E996D;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+    }
+    
+    textarea {
+      font-size: 1em;
+      padding: 4px;
+      margin: 2px 5px;
+      width: 95%;
+      resize: none;
+    }
+    
+    button,
+    input[type="button"] {
+      background: #ecc480;
+      margin: 2px 5px;
+      background-image: -webkit-linear-gradient(top, #ecc480, #ab9938);
+      background-image: -moz-linear-gradient(top, #ecc480, #ab9938);
+      background-image: -ms-linear-gradient(top, #ecc480, #ab9938);
+      background-image: -o-linear-gradient(top, #ecc480, #ab9938);
+      background-image: linear-gradient(to bottom, #ecc480, #ab9938);
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      color: #fff;
+      padding: 7px 15px 7px 15px;
+      text-decoration: none;
+      border: 1px solid #345109;
+    }
+
+    button:hover,
+    input[type="button"]:hover {
+      backgroundX: #9bc930;
+      text-decoration: none;
+      border: 1px solid #f0c930;
+    }
+    
+    button {
+      color: white;
+      font-size: 1.5rem;
+      border-radius: 0.52rem;
+    }
+
+    #toPointsInput{
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      line-height: inherit;
+      padding: 0px;
+      border: 0px;
+      background-color: white;
+      color: #3b89d8;     /* make it look like a link */
+    }
+    
+    .clear {
+      clear: both
+    }
+    
+    @media screen and (max-width:760px) {
+      #container {
+        width: 95%
+      }
+    }
+    
+    @media screen and (max-width:650px) {
+      #content {
+        width: auto;
+        float: none;
+        margin: 2px 0;
+        padding: 5px
+      }
+    
+      h1 {
+        font-size: 1.4em
+      }
+    
+      .fourdiv,
+      .halfdiv {
+        width: 100% !important;
+      }
+    }
+    
+    @media screen and (max-width:480px) {
+      html {
+        -webkit-text-size-adjust: none
+      }
+    
+      .fourdiv,
+      .halfdiv {
+        width: 100% !important;
+      }
+    }
+    
+    h5 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin: 10px 0
+    }
+    
+    .bigFont {
+      display: block;
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin: 10px 0
+    }
+    
+    
+    .smallFont {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 300;
+      margin:  2px 0;
+      line-height: 0.9rem;
+    }
+    
+    
+    .margin10 {
+      margin: 10px 0;
+    }
+    
+    .center {
+      text-align: center;
+    }
+    
+    .shadow {
+      color:#fff;
+      background-color:#689f38;
+      padding:4px;
+    }
+
+    @media screen and (max-width: 1180px) {
+      #container {
+        margin: 0 auto;
+      }
+    }
+    
+    @media screen and (min-width: 1180px) and (max-width:1330px) {
+      #container {
+        margin: 0 0 10px 170px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="container">
+
+    <!--
+<div id="header">
+<a href="https://some.web.site/" title="Some web site">
+<img src="images/logo.png" srcset="images/logo.png 1x,images/logo2x.png 2x" loading="lazy" alt="Binary Hex Converter Logo" width="120" height="40" />
+</a>
+</div>
+-->
+
+    <div id="content">
+      <div id="message" class="shadow"></div>
+
+      <h1>Μετατροπή κορυφών πολυγώνου σε αρχείο DXF</h1>
+      <p>
+        Εισάγετε το όνομα και τις συντεταγμένες
+        των κορυφών του πολυγώνου (μία κορυφή ανά γραμμή),
+        και μετά πατήστε το πλήκτρο <strong>"Αρχείο DXF"</strong>
+        για να δημιουργήσετε το σχέδιο του πολυγώνου.
+      </p>
+
+
+      <form name="form1" id="form1">
+
+        <div class="halfdiv halfdiv_left">
+          <label for="pointsList">Κορυφές</label>
+          <textarea name="pointsList" cols="38" rows="25" id="pointsList"
+            title="Όνομα κορυφής, τεταγμένη, τετμημένη">
+1  10.50 37.25
+2  3,30   30
+L_9a   24   35.10
+Q   24,40  41.790
+</textarea>
+        </div>
+
+        <div class="halfdiv halfdiv_right">
+          <img class="halfdiv_icon" src="./images/dxf_icon.png" alt="DXF icon" width="80%">
+        </div>
+        <div class="clear"></div>
+      </form>
+
+
+      <span class="smallFont">Το όνομα κορυφών μπορεί να περιέχει μόνο λατινικούς χαρακτήρες, αριθμητικά ψηφία και κάτω παύλα.
+        Στις συντεταγμένες το δεκαδικό σημείο μπορεί να είναι είτε υποδιαστολή είτε τελεία.
+      </span>
+      <div id="baseresult">
+        <button type="submit" onclick="return jsSubmit();">Αρχείο DXF</button>
+      </div>
+
+
+<!--
+      with target="_blank" the browser complains (pop-up windows permissions)
+-->
+      <form name="uploadForm" id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
+        <input type="file" name="DXFfile" id="fileElem" style="display:none">
+        <label for="fileElem"></label>
+        <span class="smallFont">Για την αντίστροφη διαδικασία, δηλαδή για μετατροπή αρχείου DXF σε λίστα κορυφών, επιλέξτε κάποιο
+          <a href="#" id="fileSelect">αρχείο</a>
+          από τον υπολογιστή σας.
+<!--
+          από τον υπολογιστή σας
+          και πατήστε <input id="toPointsInput" type="submit" value="εδώ.">
+-->
+        </span>
+      </form>
+
+
+
+      </form>
+      <div id="message" class="shadow"></div>
+    </div>
+  </div>
+
+  <!--
+<div id="footer">
+<p>&copy; 2001-2002 www.example.com | <a href="./privacy" title="Privacy">Privacy Policy</a>
+| <a href="./contact" title="Contact Us">Contact Us</a> |
+<a href="https://twitter.com/exampleCom" title="example com on Twitter" rel="noopener" target="_blank">@ExampleCom</a>
+</p>
+</div>
+-->
+
+<!--
+ Sending raw data using a form is not generally possible (only name=value pairs can be sent)
+ Let's cheat: use enctype='text/plain' (default is url-encoded) and
+ send data as a field name followed by a harmless separator (=) and empty value
+-->
+<form id="dxfwriterForm" target="_blank" style="display: none;"
+   action="https://dxfwriter.herokuapp.com"
+  method="POST">
+<input id="dxfwriterFormInput" enctype='text/plain'
+</input>
+</form>
+
+
+
+<script>
+function jsSubmit(){
+  var el1 = document.getElementById("pointsList");
+  var el2 = document.getElementById("dxfwriterFormInput");
+  if ((!el1)||(!el2)) return;
+  
+
+  el2.name = 
+    el1.value
+    .replace(/$/,"\n")                             // missing ending LF?
+    .replace(/\r/gm,"\n").replace(/\n\n*/gm, "\n") // CR/LF -> LF
+    .replace(/[^A-Za-z0-9 _\.,\t\n]/gm,"")         // sanitize input
+
+    .replace(/,/gm,".")
+    .replace(/[ \t][ \t]*/mg,"\t")
+
+    .replace(/^[ \t]*/m,"").replace(/[ \t]$/m,"")          // no leading/trailing spaces
+    .replace(/\n[ \t]*/gm,"\n").replace(/[ \t]\n/gm,"\n")  // no leading/trailing spaces
+  ;
+  el2.value = ''
+   
+   
+  console.log("pointsList:\n", JSON.stringify(el1.value));
+  console.log("dxfwriterFormInput:\n",JSON.stringify({"name":el2.name,"value":el2.value}));
+  document.getElementById("dxfwriterForm").submit();
+}
+
+
+const fileSelect = document.getElementById("fileSelect"),
+      fileElem = document.getElementById("fileElem");
+if (fileSelect) fileSelect.addEventListener("click", function (e) {
+  if (fileElem) { fileElem.click(); }
+  e.preventDefault(); // prevent navigation to "#"
+}, false);
+if (fileElem) fileElem.addEventListener("change", handleFiles, false);
+function handleFiles() {
+  if (this.files.length) {
+    formElem = document.getElementById("uploadForm");
+    if (formElem) { formElem.submit(); }       // causes browser warnings about pop-up windows, if target="_blank"
+  }
+}
+
+</script>
+
+
+</body>
+</html>
