@@ -41,7 +41,7 @@ console.log(querystring.stringify(req.body.toString()));
 const file_path = 'input_file.dxf';
 const fs = require('fs');
   try {
-    fs.writeFileSync(path, req.body)
+    fs.writeFileSync(file_path, req.body)
   } catch (err) {
     console.error(err)
   }
