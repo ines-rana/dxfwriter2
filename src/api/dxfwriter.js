@@ -1,7 +1,7 @@
 // Get some points (with an optional label), produce a DXF file
 
 /* Usage:
-      curl --data-binary @- https://dxfwriter.gtsb.io
+      curl --data-binary @- https://dxfwriter.gtsb.io/api/dxfwriter
 
    Sample input:
 A       41248.66       42682.69
@@ -18,7 +18,6 @@ D       41158.71       42621.83
 //  delimiter                     :  field delimiter  (default comma)
 const version = "2022-08"
 
-import parse, { DxfParser } from 'dxf-parser';
 import Cors from "cors";
 const cors = Cors();
 
@@ -39,7 +38,7 @@ export default async function corsHandler(req, res) {
 
 
   const Drawing = require('dxf-writer');
-  res.setHeader('X-Version_13', version);
+  res.setHeader('X-Version_14', version);
 
 
 
@@ -55,26 +54,27 @@ export default async function corsHandler(req, res) {
 
 
 
-  // req.files[0] =  {"fieldname":"DXFfile","originalname":"file.dxf","encoding":"7bit","mimetype":"application/octet-stream","buffer":{"type":"Buffer","data":[123,...,123]},"size":524}
+  // req.files[0] =  {"fieldname":"COEFFfile","originalname":"file.dxf","encoding":"7bit","mimetype":"application/octet-stream","buffer":{"type":"Buffer","data":[123,...,123]},"size":524}
 
+/*
   // handle file uploads
   if (!req.files) { // curl --data-binary @points.txt http://this.url
     // No file uploaded; continue
-  } else { // curl -F DXFfile=@file.dxf http://this.url
+  } else { // curl -F COEFFfile=@file.dxf http://this.url
     res.append('Content-Type', 'text/plain; charset=UTF-8');
     if (req.files[0] && req.files[0].fieldname &&
-      req.files[0].fieldname === "DXFfile") {
+      req.files[0].fieldname === "COEFFfile") {
       console.log('/: file uploaded', '(' + /*req.files[0].originalname +*/ req.files[0].size + ' bytes)');
       res.send(fileUploadHandler(req));
       res.end();
       return;
     } else { // curl -F foo=@bar http://this.url
-      res.send('DXFfile field not found' + "\n");
+      res.send('COEFFfile field not found' + "\n");
       res.end();
       return;
     }
   }
-
+*/
 
   res.append('Content-Type', 'application/dxf');
   res.append('Content-Disposition', 'attachment; filename="polygon.dxf"');
@@ -292,6 +292,7 @@ function findCentroid(points) {
 
 
 
+/*
 
 function fileUploadHandler(req) {
   try {
@@ -302,6 +303,7 @@ function fileUploadHandler(req) {
       });
     } else {
       // first uploaded file's contents
+      var parser = new DxfParser();
       var parsed = parser.parseSync(req.files[0].buffer.toString());
 
       if (parsed && parsed.error) {
@@ -314,3 +316,4 @@ function fileUploadHandler(req) {
     return (err + "\n");
   }
 }
+*/
