@@ -49,7 +49,7 @@ const fs = require('fs');
 
   const parsed_input = parserFunction(file_path);
   res.json(parsed_input);
-  try{ fs.unlinkSync(file_path); } } catch (err) { /* console.error(err) */}
+  try{ fs.unlinkSync(file_path); } catch (err) { /* console.error(err) */}
   return;
 }
 
