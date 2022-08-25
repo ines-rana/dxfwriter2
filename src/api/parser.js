@@ -52,36 +52,33 @@ export default async function corsHandler(req, res) {
 
   // first uploaded file contents:  (ignoring parameter (DXFfile) name)
   //console.log(req.files[0].buffer.toString());
-  const parsed_input = parserFunction(req.files[0].buffer.toString());
+  var parsed_input;
+  var failure = false;
+  var parser = new DxfParser();
+  try {
+    // parse DXF file
+    parsed_input = parser.parseSync(req.files[0].buffer.toString());
+  } catch (err) {
+    //console.error(err.stack);
+    failure = true;
+    res.json({ "error": err.stack });
+  }
+  if (failure) return;
 
-    res.setHeader('content-type', 'text/plain; charset=UTF-8');
-    if (parsed_input) {
-      res.send(parsed2coefficients(parsed_input));
-    } else {
-      res.send("");
-    }
-    res.end();
-  };
+
+  res.setHeader('content-type', 'text/plain; charset=UTF-8');
+
+  if (parsed_input) {
+    res.send(parsed2coefficients(parsed_input));
+  } else {
+    res.send("");
+  }
+  res.end();
 
   return;
 }
 
 
-
-// parse DXF file
-function parserFunction(text) {
-  //console.log("input length:", text.length);
-  var parser = new DxfParser();
-  try {
-    var dxf = parser.parseSync(text);
-    return (dxf);
-  } catch (err) {
-    //console.error(err.stack);
-    return ({
-      "error": err.stack
-    });
-  }
-}
 
 
 
