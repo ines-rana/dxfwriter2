@@ -61,7 +61,7 @@ export default async function corsHandler(req, res) {
   } catch (err) {
     //console.error(err.stack);
     failure = true;
-    res.json({ "error": err.stack });
+    res.status(400).json({ "error": err.stack });
   }
   if (failure) return;
 
