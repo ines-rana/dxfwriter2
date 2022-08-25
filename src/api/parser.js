@@ -26,10 +26,11 @@ import parse, { DxfParser } from 'dxf-parser';
 
 
 export default function handler(req, res) {
-  res.setHeader('X-Version', version + '_22');
+  res.setHeader('X-Version', version + '_23');
 
   res.setHeader('X-input', JSON.stringify(req.body));
   res.setHeader('X-req', JSON.stringify(req));
+console.log("req.files", req.files);
   res.setHeader('X-files', JSON.stringify(req.files));
 /*
 var querystring = require("querystring");
