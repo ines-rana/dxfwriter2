@@ -42,7 +42,7 @@ const file_path = 'input_file.dxf';
 const fs = require('fs');
 const storeData = (req.body, file_path) => {
   try {
-    fs.writeFileSync(path, JSON.stringify(data))
+    fs.writeFileSync(path, data)
   } catch (err) {
     console.error(err)
   }
