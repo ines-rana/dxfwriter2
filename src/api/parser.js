@@ -32,11 +32,10 @@ export const config = {
        limit: "100kb",
        extended: false
      },
-/*
-    raw: {
-      type: `*/*`,
-    },
-*/
+
+//  raw: {
+//    type: `*/*`,
+//  },
   },
 }
 
