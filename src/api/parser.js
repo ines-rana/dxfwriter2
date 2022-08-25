@@ -18,27 +18,31 @@ import parse, { DxfParser } from 'dxf-parser';
 // and result in function handler receiving req.body as a Buffer.
 export const config = {
   bodyParser: {
-     urlencoded: {
-       type: "application/x-www-form-urlencoded",
-       limit: "100kb",
-       extended: true
-     },
+///  urlencoded: {
+///    type: "application/x-www-form-urlencoded",
+///    limit: "100kb",
+///    extended: true
+///  },
 
-//  raw: {
-//    type: `*/*`,
-//  },
+    raw: {
+      type: `*/*`,
+    },
   },
 }
 
 
 
 export default function handler(req, res) {
-  res.setHeader('X-Version', version);
+  res.setHeader('X-Version', version + '12');
 
 var querystring = require("querystring");
 //var result = querystring.stringify({query: "SELECT name FROM user WHERE uid = me()"});
+/*
 console.log(querystring.stringify(req.body));
   const parsed_input = parserFunction(req.body);
+*/
+console.log(querystring.stringify(req.body.toString()));
+  const parsed_input = parserFunction(req.body.toString());
   res.json(parsed_input);
   return;
 }
