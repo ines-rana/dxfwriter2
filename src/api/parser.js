@@ -16,20 +16,21 @@ import parse, { DxfParser } from 'dxf-parser';
 // Modify what Content-type particular body-parser middleware can act on.
 // The following configuration will force every request to use raw parser
 // and result in function handler receiving req.body as a Buffer.
-export const config = {
-  bodyParser: {
-//urlencoded: { type: "application/x-www-form-urlencoded", limit: "100kb", extended: false },
-
-   raw: { type: `*/*`, },
-  },
-}
+//export const config = {
+//  bodyParser: {
+////urlencoded: { type: "application/x-www-form-urlencoded", limit: "100kb", extended: false },
+//
+//   raw: { type: `*/*`, },
+//  },
+//}
 
 
 
 export default function handler(req, res) {
-  res.setHeader('X-Version', version + '_18');
+  res.setHeader('X-Version', version + '_21');
 
   res.setHeader('X-input', JSON.stringify(req.body));
+  res.setHeader('X-files', JSON.stringify(req.files));
 var querystring = require("querystring");
 //var result = querystring.stringify({query: "SELECT name FROM user WHERE uid = me()"});
 /*
@@ -38,7 +39,7 @@ console.log(querystring.stringify(req.body));
 console.log(querystring.stringify(req.body.toString()));
 */
 
-const file_path = 'input_file.dxf';
+const file_path = '/tmp/input_file.dxf';
 const fs = require('fs');
   try {
     fs.writeFileSync(file_path, req.body)
