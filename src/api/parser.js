@@ -22,6 +22,9 @@ const version = "2022-08"
 
 import parse, { DxfParser } from 'dxf-parser';
 
+// Modify what Content-type particular body-parser middleware can act on.
+// The following configuration will force every request to use raw parser
+// and result in function handler receiving req.body as a Buffer.
 export const config = {
   bodyParser: {
     raw: {
@@ -30,12 +33,13 @@ export const config = {
   },
 }
 
+
+
 export default function handler(req, res) {
   res.setHeader('X-Version', version);
 
-console.log(req.body.text);
-console.log(req.body);
-  const parsed_input = parserFunction(req.body);
+console.log(req.body.toString());
+  const parsed_input = parserFunction(req.body.toString());
   res.json(parsed_input);
   return;
 }
