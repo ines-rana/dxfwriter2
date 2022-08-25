@@ -33,7 +33,7 @@ await new Promise((resolve, reject) => {
     }
     resolve(result)
   })
-})
+});
 
 
 
