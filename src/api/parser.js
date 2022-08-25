@@ -26,7 +26,7 @@ import parse, { DxfParser } from 'dxf-parser';
 
 
 export default function handler(req, res) {
-  res.setHeader('X-Version', version + '_26');
+  res.setHeader('X-Version', version + '_27');
 
   res.setHeader('X-input', JSON.stringify(req.body));
 console.log("req.files", req.files);
@@ -37,7 +37,7 @@ var querystring = require("querystring");
 console.log(querystring.stringify(req.body));
   const parsed_input = parserFunction(req.body);
 */
-console.log(querystring.stringify(req.files[0].buffer.toString()));
+console.log(req.files[0].buffer.toString());
 
 const file_path = '/tmp/input_file.dxf';
 const fs = require('fs');
