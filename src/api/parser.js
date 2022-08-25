@@ -27,9 +27,16 @@ import parse, { DxfParser } from 'dxf-parser';
 // and result in function handler receiving req.body as a Buffer.
 export const config = {
   bodyParser: {
+     urlencoded: {
+       type: "application/x-www-form-urlencoded",
+       limit: "100kb",
+       extended: false
+     },
+/*
     raw: {
       type: `*/*`,
     },
+*/
   },
 }
 
@@ -39,7 +46,8 @@ export default function handler(req, res) {
   res.setHeader('X-Version', version);
 
 console.log(req.body.toString());
-  const parsed_input = parserFunction(req.body.toString());
+console.log(req.body.toString());
+  const parsed_input = parserFunction(req.body);
   res.json(parsed_input);
   return;
 }
