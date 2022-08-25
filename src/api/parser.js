@@ -44,8 +44,7 @@ export const config = {
 export default function handler(req, res) {
   res.setHeader('X-Version', version);
 
-console.log(req.body.toString());
-console.log(req.body.toString());
+console.log(req.body);
   const parsed_input = parserFunction(req.body);
   res.json(parsed_input);
   return;
