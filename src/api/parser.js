@@ -27,7 +27,7 @@ export default async function corsHandler(req, res) {
 
 
 
-  res.setHeader('X-Version', version + '_33');
+  res.setHeader('X-Version', version + '_34');
 
   var format = req.query.format || ""; // default
 
