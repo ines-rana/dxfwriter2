@@ -11,8 +11,22 @@
 const version = "2022-08"
 
 import parse, { DxfParser } from 'dxf-parser';
+import Cors from "cors"
+const cors = Cors()
 
-export default function handler(req, res) {
+export default async function corsHandler(req, res) {
+  // Run Cors middleware and handle errors.
+  await new Promise((resolve, reject) => {
+    cors(req, res, result => {
+      if (result instanceof Error) {
+        reject(result)
+      }
+      resolve(result)
+    })
+  })
+
+
+
   res.setHeader('X-Version', version + '_33');
 
   var format = req.query.format || ""; // default
