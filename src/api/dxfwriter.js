@@ -38,7 +38,7 @@ export default async function corsHandler(req, res) {
 
 
   const Drawing = require('dxf-writer');
-  res.setHeader('X-Version_17', version);
+  res.setHeader('X-Version_18', version);
 
 
 
@@ -92,7 +92,7 @@ console.log("req.query:", JSON.stringify(req.query));
 
   // curl --data-binary 'A\t66\t69\nc\t82\t41\nL\t54\t35\n' ==>
   //  req.body sample: {"A\t66\t69\nc\t82\t41\nL\t54\t35\n":""}
-  var pointsArray = req.body
+  var pointsArray = Object.keys(req.body)[0]
     .replace(/\r/mg, "")
     .replace(/\n$/, "")
     .split('\n');
