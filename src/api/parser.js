@@ -35,7 +35,8 @@ import Cors from "cors"
 const cors = Cors()
 
 export default async function corsHandler(req, res) {
-  // Run Cors middleware and handle errors.
+
+  // Run CORS middleware and handle errors
   await new Promise((resolve, reject) => {
     cors(req, res, result => {
       if (result instanceof Error) {
@@ -50,18 +51,20 @@ export default async function corsHandler(req, res) {
   res.setHeader('X-Version', version);
 
 
-  // first uploaded file contents:  (ignoring parameter (DXFfile) name)
-  //console.log(req.files[0].buffer.toString());
   var parsed_input;
   var failure = false;
   var parser = new DxfParser();
   try {
     // parse DXF file
+    // first uploaded file's contents:  (ignoring parameter (DXFfile) name)
+    //console.log(req.files[0].buffer.toString());
     parsed_input = parser.parseSync(req.files[0].buffer.toString());
   } catch (err) {
     //console.error(err.stack);
     failure = true;
-    res.status(400).json({"error": err.stack});
+    res.status(400).json({
+      "error": err.stack
+    });
   }
   if (failure) return;
 
@@ -85,64 +88,65 @@ export default async function corsHandler(req, res) {
 
 
 // pick up coefficients' pairs
-function parsed2coefficients(parsed){
+function parsed2coefficients(parsed) {
 
   // collect x/y coefficient pairs for every vertex of a LINE/LWPOLYLINE
   var coeffs = [];
-  parsed.entities                          // get entities
+  parsed.entities // get entities
     .filter(
       function(e) {
         return (
-          (e.type == "LINE") ||          // which are points collections
+          (e.type == "LINE") || // which are points collections
           (e.type == "LWPOLYLINE") ||
           (e.type == "POLYLINE")
         )
       }).
   forEach(function(e) {
     //console.log( e )
-  
+
     var v = [];
     e.vertices.forEach(function(p) {
       //console.log("p",p)
-      v.push(p.x, p.y);                  // vertex v_n: [xn1,yn1,xn2,yn2,...]
+      v.push(p.x, p.y); // vertex v_n: [xn1,yn1,xn2,yn2,...]
     });
     //console.log("v",v);                // coeffs: [vertex1, vertex2, ...]
-    coeffs.push(v)                       //       = [ [x11,y11,x12,y12..],
-  })                                     //           [x21,y21,x22,y22..]..]
-  
+    coeffs.push(v) //       = [ [x11,y11,x12,y12..],
+  }) //           [x21,y21,x22,y22..]..]
+
   var ret = "";
   var prevX, prevY;
-  
+
   var addPolygonHeaders = (coeffs.length > 1)
-  
+
   for (var polygon = 0; polygon < coeffs.length; polygon++) {
-    prevX=""; prevY="";
+    prevX = "";
+    prevY = "";
 
     // if more than one polygons, print a header
     if (addPolygonHeaders) ret += (polygon == 0 ? "" : "\n") + 'Πολύγωνο_' + (polygon + 1) + "\n";
 
     // for all lines in polygon push their points' coefficients
     for (var line = 0; line < coeffs[polygon].length; line += 2) {
-  
+
       // last point identical to first point?
       if ((line == coeffs[polygon].length - 2) &&
         (JSON.stringify(coeffs[polygon][0]) == JSON.stringify(coeffs[polygon][line]))
       ) continue;
-  
+
       // duplicate point?
-      if ((coeffs[polygon][line] == prevX)&&(coeffs[polygon][line+1] == prevY)) continue;
-  
+      if ((coeffs[polygon][line] == prevX) && (coeffs[polygon][line + 1] == prevY)) continue;
+
       prevX = coeffs[polygon][line];
-      prevY = coeffs[polygon][line+1];
-  
+      prevY = coeffs[polygon][line + 1];
+
       // print coefficient pairs
       ret += ((line / 2) + 1) + "\t" + coeffs[polygon][line] + "\t" + coeffs[polygon][line + 1] + "\n";
     }
   }
-//console.log(coeffs)
-//console.log(ret)
+  //console.log(coeffs)
+  //console.log(ret)
 
-  return(ret)
+  return (ret)
 
 }
 
