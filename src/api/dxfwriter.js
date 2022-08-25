@@ -124,15 +124,13 @@ var labelSize = req.query.labelSize;
 if (!labelSize) labelSize = findMaxDxDy(label_x_y) * 0.02;
 //console.log("labelSize:", labelSize);
 
-const here_doc = (function() {
-  /*HERE DOCUMENT
+const here_doc = (function() {/*HERE DOCUMENT
   MORE LINES...
   */
 }).toString().match(/[^]*\/\*([^]*)\*\/\}$/)[1];
 
 var center = findCentroid(label_x_y);
-var centerX = center[0],
-  centerY = center[1];
+var centerX = center[0], centerY = center[1];
 //console.log("center at:", centerX, centerY);
 
 
