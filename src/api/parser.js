@@ -1,8 +1,7 @@
 // Parse a DXF file
 
 /* Usage:
-      curl --data-binary @- https://dxfwriter.gtsb.io/api/parser
-      curl --data-binary @- https://dxfwriter.gtsb.io/api/parser?format=json
+      curl -F DXFfile=@1.dxf https://dxfwriter.gtsb.io/api/parser[?format=json]
 */
 
 // query parameters
@@ -27,13 +26,14 @@ import parse, { DxfParser } from 'dxf-parser';
 
 
 export default function handler(req, res) {
-  res.setHeader('X-Version', version + '_21');
+  res.setHeader('X-Version', version + '_22');
 
   res.setHeader('X-input', JSON.stringify(req.body));
+  res.setHeader('X-req', JSON.stringify(req));
   res.setHeader('X-files', JSON.stringify(req.files));
+/*
 var querystring = require("querystring");
 //var result = querystring.stringify({query: "SELECT name FROM user WHERE uid = me()"});
-/*
 console.log(querystring.stringify(req.body));
   const parsed_input = parserFunction(req.body);
 console.log(querystring.stringify(req.body.toString()));
