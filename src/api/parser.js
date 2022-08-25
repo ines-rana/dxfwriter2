@@ -40,13 +40,11 @@ console.log(querystring.stringify(req.body.toString()));
 
 const file_path = 'input_file.dxf';
 const fs = require('fs');
-const storeData = (req.body, file_path) => {
   try {
-    fs.writeFileSync(path, data)
+    fs.writeFileSync(path, req.body)
   } catch (err) {
     console.error(err)
   }
-}
 
   const parsed_input = parserFunction(file_path);
   res.json(parsed_input);
