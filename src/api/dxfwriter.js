@@ -88,7 +88,7 @@ export default async function corsHandler(req, res) {
 
   // curl --data-binary 'A\t66\t69\nc\t82\t41\nL\t54\t35\n' ==>
   //  req.body sample: {"A\t66\t69\nc\t82\t41\nL\t54\t35\n":""}
-  var pointsArray = Object.keys(req.body)[0]
+  var pointsArray = req.body
     .replace(/\r/mg, "")
     .replace(/\n$/, "")
     .split('\n');
