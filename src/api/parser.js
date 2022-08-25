@@ -25,6 +25,7 @@ import parse, { DxfParser } from 'dxf-parser';
 export default function handler(req, res) {
   res.setHeader('X-Version', version);
 
+console.log(req.body.text());
 console.log(req.body);
   const parsed_input = parserFunction(req.body);
   res.json(parsed_input);
