@@ -16,24 +16,18 @@ import parse, { DxfParser } from 'dxf-parser';
 // Modify what Content-type particular body-parser middleware can act on.
 // The following configuration will force every request to use raw parser
 // and result in function handler receiving req.body as a Buffer.
-//export const config = {
-//  bodyParser: {
-/////  urlencoded: {
-/////    type: "application/x-www-form-urlencoded",
-/////    limit: "100kb",
-/////    extended: true
-/////  },
-//
-//    raw: {
-//      type: `*/*`,
-//    },
-//  },
-//}
+export const config = {
+  bodyParser: {
+urlencoded: { type: "application/x-www-form-urlencoded", limit: "100kb", extended: false },
+
+// raw: { type: `*/*`, },
+  },
+}
 
 
 
 export default function handler(req, res) {
-  res.setHeader('X-Version', version + '_14');
+  res.setHeader('X-Version', version + '_15');
 
   res.setHeader('X-input', JSON.stringify(req.body));
 var querystring = require("querystring");
