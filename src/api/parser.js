@@ -33,11 +33,14 @@ export default function handler(req, res) {
 
 function parserFunction(text) {
 //console.log("input length:", text.length);
+console.log("input length:", text.length);
   var parser = new DxfParser();
   try {
     var dxf = parser.parseSync(text);
+console.log("parser OK");
     return (dxf);
   } catch(err) {
+console.error(err.stack);
     //console.error(err.stack);
     return ({"error": err.stack});
   }
