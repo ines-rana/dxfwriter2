@@ -38,7 +38,7 @@ export default async function corsHandler(req, res) {
 
 
   const Drawing = require('dxf-writer');
-  res.setHeader('X-Version_18', version);
+  res.setHeader('X-Version_19', version);
 
 
 
@@ -97,6 +97,7 @@ console.log("req.query:", JSON.stringify(req.query));
     .replace(/\n$/, "")
     .split('\n');
   //console.log("Points array", pointsArray, "  length:", pointsArray.length);
+console.log("Points array", pointsArray, "  length:", pointsArray.length);
 
   // check first line to determine number of fields;
   // if it's two then no label exist       X<delimiter>Y
