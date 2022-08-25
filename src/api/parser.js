@@ -27,7 +27,7 @@ urlencoded: { type: "application/x-www-form-urlencoded", limit: "100kb", extende
 
 
 export default function handler(req, res) {
-  res.setHeader('X-Version', version + '_15');
+  res.setHeader('X-Version', version + '_16');
 
   res.setHeader('X-input', JSON.stringify(req.body));
 var querystring = require("querystring");
@@ -35,9 +35,20 @@ var querystring = require("querystring");
 /*
 console.log(querystring.stringify(req.body));
   const parsed_input = parserFunction(req.body);
-*/
 console.log(querystring.stringify(req.body.toString()));
-  const parsed_input = parserFunction(req.body.toString());
+*/
+
+const file_path = 'input_file.dxf';
+const fs = require('fs');
+const storeData = (req.body, file_path) => {
+  try {
+    fs.writeFileSync(path, JSON.stringify(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+  const parsed_input = parserFunction(file_path);
   res.json(parsed_input);
   return;
 }
