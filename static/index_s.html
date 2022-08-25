@@ -417,7 +417,7 @@ Q   24,40  41.790
 <!--
       with target="_blank" the browser complains (pop-up windows permissions)
 -->
-      <form name="uploadForm" id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
+      <form name="uploadForm" id="uploadForm" action="./api/dxfwriter" method="POST" enctype="multipart/form-data">
         <input type="file" name="DXFfile" id="fileElem" style="display:none">
         <label for="fileElem"></label>
         <span class="smallFont">Για την αντίστροφη διαδικασία, δηλαδή για μετατροπή αρχείου DXF σε λίστα κορυφών, επιλέξτε κάποιο
@@ -452,7 +452,7 @@ Q   24,40  41.790
  send data as a field name followed by a harmless separator (=) and empty value
 -->
 <form id="dxfwriterForm" target="_blank" style="display: none;"
-   action="https://dxfwriter.herokuapp.com"
+   action="https://dxfwriter.gtsb.io/api/parser"
   method="POST">
 <input id="dxfwriterFormInput" enctype='text/plain'
 </input>
