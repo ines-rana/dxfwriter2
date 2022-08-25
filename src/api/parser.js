@@ -18,7 +18,7 @@ import parse, { DxfParser } from 'dxf-parser';
 // and result in function handler receiving req.body as a Buffer.
 export const config = {
   bodyParser: {
-urlencoded: { type: "application/x-www-form-urlencoded", limit: "100kb", extended: false },
+//urlencoded: { type: "application/x-www-form-urlencoded", limit: "100kb", extended: false },
 
 // raw: { type: `*/*`, },
   },
@@ -27,7 +27,7 @@ urlencoded: { type: "application/x-www-form-urlencoded", limit: "100kb", extende
 
 
 export default function handler(req, res) {
-  res.setHeader('X-Version', version + '_16');
+  res.setHeader('X-Version', version + '_17');
 
   res.setHeader('X-input', JSON.stringify(req.body));
 var querystring = require("querystring");
@@ -45,6 +45,7 @@ const fs = require('fs');
   } catch (err) {
     console.error(err)
   }
+
 
   const parsed_input = parserFunction(file_path);
   res.json(parsed_input);
