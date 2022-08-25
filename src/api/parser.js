@@ -13,7 +13,7 @@ const version = "2022-08"
 import parse, { DxfParser } from 'dxf-parser';
 
 export default function handler(req, res) {
-  res.setHeader('X-Version', version + '_32');
+  res.setHeader('X-Version', version + '_33');
 
   var format = req.query.format || ""; // default
 
@@ -31,6 +31,7 @@ export default function handler(req, res) {
     } 
   else
     {
+      res.setHeader('content-type', 'text/plain; charset=UTF-8');
       if (parsed_input) {
         res.send(JSON.stringify(parsed_input, null, 2) + '\n');
       } else {
