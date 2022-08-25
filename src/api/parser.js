@@ -20,10 +20,11 @@ D       41158.71       42621.83
 
 const version = "2022-08"
 
+import parse, { DxfParser } from 'dxf-parser';
+
 export default function handler(req, res) {
   res.setHeader('X-Version', version);
 
-  const DxfParser = require('dxf-parser');
   const parsed_input = parserFunction(req.body);
   res.json(parsed_input);
   return;
