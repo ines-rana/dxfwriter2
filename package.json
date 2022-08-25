@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "dxf-writer": "^1.18.2",
+    "dxf-parser": "^1.0.1",
     "request": "^2.88.2",
 
     "gatsby": "^3.13.1",
