@@ -20,7 +20,7 @@ export const config = {
   bodyParser: {
 //urlencoded: { type: "application/x-www-form-urlencoded", limit: "100kb", extended: false },
 
-// raw: { type: `*/*`, },
+   raw: { type: `*/*`, },
   },
 }
 
