@@ -1,21 +1,12 @@
-// Get some points (with an optional label), produce a DXF file
+// Parse a DXF file
 
 /* Usage:
-      curl --data-binary @- https://dxfwriter.herokuapp.com
-
-   Sample input:
-A       41248.66       42682.69
-B       41355.82       42625.14
-C       41224.19       42535.84
-D       41158.71       42621.83
+      curl --data-binary @- https://dxfwriter.gtsb.io/api/parser
+      curl --data-binary @- https://dxfwriter.gtsb.io/api/parser?format=json
 */
 
 // query parameters
-//  labelSize                     :  desired label size
-//  distanceMagnifier:  each label will be drawn
-//      at (point distance from geometric center) times this
-//      away from the geometric center
-//  delimiter                     :  field delimiter  (default comma)
+//  format=json     (default is text/plain)
 
 
 const version = "2022-08"
@@ -30,7 +21,7 @@ export const config = {
      urlencoded: {
        type: "application/x-www-form-urlencoded",
        limit: "100kb",
-       extended: false
+       extended: true
      },
 
 //  raw: {
@@ -44,7 +35,9 @@ export const config = {
 export default function handler(req, res) {
   res.setHeader('X-Version', version);
 
-console.log(req.body);
+var querystring = require("querystring");
+//var result = querystring.stringify({query: "SELECT name FROM user WHERE uid = me()"});
+console.log(querystring.stringify(req.body));
   const parsed_input = parserFunction(req.body);
   res.json(parsed_input);
   return;
