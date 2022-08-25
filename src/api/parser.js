@@ -33,8 +33,9 @@ export const config = {
 
 
 export default function handler(req, res) {
-  res.setHeader('X-Version', version + '12');
+  res.setHeader('X-Version', version + '_13');
 
+  res.setHeader('X-input', JSON.stringify(req.body));
 var querystring = require("querystring");
 //var result = querystring.stringify({query: "SELECT name FROM user WHERE uid = me()"});
 /*
