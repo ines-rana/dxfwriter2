@@ -90,63 +90,62 @@ console.error(err.stack);
 
 function parsed2coefficients(parsed){
 
-    // collect x/y coefficient pairs for every vertex of a LINE/LWPOLYLINE
-    var coeffs = [];
-    parsed.entities                          // get entities
-      .filter(
-        function(e) {
-          return (
-            (e.type == "LINE") ||          // which are points collections
-            (e.type == "LWPOLYLINE") ||
-            (e.type == "POLYLINE")
-          )
-        }).
-    forEach(function(e) {
-      //console.log( e )
-    
-      var v = [];
-      e.vertices.forEach(function(p) {
-        //console.log("p",p)
-        v.push(p.x, p.y);                  // vertex v_n: [xn1,yn1,xn2,yn2,...]
-      });
-      //console.log("v",v);                // coeffs: [vertex1, vertex2, ...]
-      coeffs.push(v)                       //       = [ [x11,y11,x12,y12..],
-    })                                     //           [x21,y21,x22,y22..]..]
-    
-    var ret = "";
-    var prevX, prevY;
-    
-    var addPolygonHeaders = (coeffs.length > 1)
-    
-    for (var polygon = 0; polygon < coeffs.length; polygon++) {
-      prevX=""; prevY="";
+  // collect x/y coefficient pairs for every vertex of a LINE/LWPOLYLINE
+  var coeffs = [];
+  parsed.entities                          // get entities
+    .filter(
+      function(e) {
+        return (
+          (e.type == "LINE") ||          // which are points collections
+          (e.type == "LWPOLYLINE") ||
+          (e.type == "POLYLINE")
+        )
+      }).
+  forEach(function(e) {
+    //console.log( e )
+  
+    var v = [];
+    e.vertices.forEach(function(p) {
+      //console.log("p",p)
+      v.push(p.x, p.y);                  // vertex v_n: [xn1,yn1,xn2,yn2,...]
+    });
+    //console.log("v",v);                // coeffs: [vertex1, vertex2, ...]
+    coeffs.push(v)                       //       = [ [x11,y11,x12,y12..],
+  })                                     //           [x21,y21,x22,y22..]..]
+  
+  var ret = "";
+  var prevX, prevY;
+  
+  var addPolygonHeaders = (coeffs.length > 1)
+  
+  for (var polygon = 0; polygon < coeffs.length; polygon++) {
+    prevX=""; prevY="";
 
-      // if more than one polygons, print a header
-      if (addPolygonHeaders) ret += (polygon == 0 ? "" : "\n") + 'Πολύγωνο_' + (polygon + 1) + "\n";
+    // if more than one polygons, print a header
+    if (addPolygonHeaders) ret += (polygon == 0 ? "" : "\n") + 'Πολύγωνο_' + (polygon + 1) + "\n";
 
-      // for all lines in polygon push their points' coefficients
-      for (var line = 0; line < coeffs[polygon].length; line += 2) {
-    
-        // last point identical to first point?
-        if ((line == coeffs[polygon].length - 2) &&
-          (JSON.stringify(coeffs[polygon][0]) == JSON.stringify(coeffs[polygon][line]))
-        ) continue;
-    
-        // duplicate point?
-        if ((coeffs[polygon][line] == prevX)&&(coeffs[polygon][line+1] == prevY)) continue;
-    
-        prevX = coeffs[polygon][line];
-        prevY = coeffs[polygon][line+1];
-    
-        // print coefficient pairs
-        ret += ((line / 2) + 1) + "\t" + coeffs[polygon][line] + "\t" + coeffs[polygon][line + 1] + "\n";
-      }
+    // for all lines in polygon push their points' coefficients
+    for (var line = 0; line < coeffs[polygon].length; line += 2) {
+  
+      // last point identical to first point?
+      if ((line == coeffs[polygon].length - 2) &&
+        (JSON.stringify(coeffs[polygon][0]) == JSON.stringify(coeffs[polygon][line]))
+      ) continue;
+  
+      // duplicate point?
+      if ((coeffs[polygon][line] == prevX)&&(coeffs[polygon][line+1] == prevY)) continue;
+  
+      prevX = coeffs[polygon][line];
+      prevY = coeffs[polygon][line+1];
+  
+      // print coefficient pairs
+      ret += ((line / 2) + 1) + "\t" + coeffs[polygon][line] + "\t" + coeffs[polygon][line + 1] + "\n";
     }
+  }
 //console.log(coeffs)
 //console.log(ret)
 
-    return(ret)
-  }
+  return(ret)
 
 }
 
