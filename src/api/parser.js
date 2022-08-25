@@ -22,8 +22,6 @@ const version = "2022-08"
 
 export default function handler(req, res) {
   res.setHeader('X-Version', version);
-  res.status(200).send(d.toDxfString());
-
 
 
 const Drawing = require('dxf-writer');
