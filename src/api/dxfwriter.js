@@ -56,25 +56,23 @@ export default async function corsHandler(req, res) {
 
   // req.files[0] =  {"fieldname":"COEFFfile","originalname":"file.dxf","encoding":"7bit","mimetype":"application/octet-stream","buffer":{"type":"Buffer","data":[123,...,123]},"size":524}
 
-/*
-  // handle file uploads
-  if (!req.files) { // curl --data-binary @points.txt http://this.url
-    // No file uploaded; continue
-  } else { // curl -F COEFFfile=@file.dxf http://this.url
-    res.append('Content-Type', 'text/plain; charset=UTF-8');
-    if (req.files[0] && req.files[0].fieldname &&
-      req.files[0].fieldname === "COEFFfile") {
-      console.log('/: file uploaded', '(' + /*req.files[0].originalname +*/ req.files[0].size + ' bytes)');
-      res.send(fileUploadHandler(req));
-      res.end();
-      return;
-    } else { // curl -F foo=@bar http://this.url
-      res.send('COEFFfile field not found' + "\n");
-      res.end();
-      return;
-    }
-  }
-*/
+//  // handle file uploads
+//  if (!req.files) { // curl --data-binary @points.txt http://this.url
+//    // No file uploaded; continue
+//  } else { // curl -F COEFFfile=@file.dxf http://this.url
+//    res.append('Content-Type', 'text/plain; charset=UTF-8');
+//    if (req.files[0] && req.files[0].fieldname &&
+//      req.files[0].fieldname === "COEFFfile") {
+//      console.log('/: file uploaded', '(' + /*req.files[0].originalname +*/ req.files[0].size + ' bytes)');
+//      res.send(fileUploadHandler(req));
+//      res.end();
+//      return;
+//    } else { // curl -F foo=@bar http://this.url
+//      res.send('COEFFfile field not found' + "\n");
+//      res.end();
+//      return;
+//    }
+//  }
 
   res.append('Content-Type', 'application/dxf');
   res.append('Content-Disposition', 'attachment; filename="polygon.dxf"');
