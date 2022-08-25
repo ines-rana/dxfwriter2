@@ -26,7 +26,7 @@ import parse, { DxfParser } from 'dxf-parser';
 
 
 export default function handler(req, res) {
-  res.setHeader('X-Version', version + '_29');
+  res.setHeader('X-Version', version + '_30');
 
   res.setHeader('X-input', JSON.stringify(req.body));
 /*
@@ -48,7 +48,7 @@ const fs = require('fs');
 
 res.setHeader('X-filepath', JSON.stringify(file_path));
 //const parsed_input = parserFunction(file_path);
-  const parsed_input = parserFunction(req.files[0].buffer);
+  const parsed_input = parserFunction(req.files[0].buffer.toString());
 console.log("parsed_input", parsed_input);
   res.json(parsed_input);
   try{ fs.unlinkSync(file_path); } catch (err) { /* console.error(err) */}
