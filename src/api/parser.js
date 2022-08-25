@@ -20,15 +20,16 @@ export default function handler(req, res) {
   var format = req.query.format;
   if (!format) format = "";    // default
 
-  res.setHeader('X-input', JSON.stringify(req.body));
   //console.log(req.files[0].buffer.toString());
   const parsed_input = parserFunction(req.files[0].buffer.toString());
 
-  format.toUpperCase() == "JSON" 
+  format.toUpperCase() === "JSON" 
     ? { if (parsed_input){ res.send(parsed_input).json(); } else { res.send({}).json(); } res.end(); }
     : { if (parsed_input){ res.send(JSON.stringify(parsed_input, null, 2) + '\n'); } else { res.send(""); } res.end(); };
   return;
 }
+
+
 
 
 function parserFunction(text) {
