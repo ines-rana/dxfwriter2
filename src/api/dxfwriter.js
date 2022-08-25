@@ -38,7 +38,7 @@ export default async function corsHandler(req, res) {
 
 
   const Drawing = require('dxf-writer');
-  res.setHeader('X-Version_15', version);
+  res.setHeader('X-Version_16', version);
 
 
 
