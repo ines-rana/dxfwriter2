@@ -27,7 +27,7 @@ export const config = {
 
 
 export default function handler(req, res) {
-  res.setHeader('X-Version', version + '_17');
+  res.setHeader('X-Version', version + '_18');
 
   res.setHeader('X-input', JSON.stringify(req.body));
 var querystring = require("querystring");
@@ -49,6 +49,7 @@ const fs = require('fs');
 
   const parsed_input = parserFunction(file_path);
   res.json(parsed_input);
+  try{ fs.unlinkSync(file_path); } } catch (err) { /* console.error(err) */}
   return;
 }
 
