@@ -38,7 +38,7 @@ export default async function corsHandler(req, res) {
 
 
   const Drawing = require('dxf-writer');
-  res.setHeader('X-Version_21', version);
+  res.setHeader('X-Version_22', version);
 
 
 
@@ -249,7 +249,8 @@ function findMaxDxDy(points) {
   var maxX = minX;
   var minY = points[0][2];
   var maxY = minY;
-  for (var i = 0; i < nPts; var j = i++) {
+  var i, j;
+  for (i = 0; i < nPts; j = i++) {
     var x = points[i][1],
       y = points[i][2];
     if (x < minX) minX = x;
