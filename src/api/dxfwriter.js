@@ -38,7 +38,7 @@ export default async function corsHandler(req, res) {
 
 
   const Drawing = require('dxf-writer');
-  res.setHeader('X-Version_22', version);
+  res.setHeader('X-Version', version);
 
 
 
@@ -87,10 +87,6 @@ export default async function corsHandler(req, res) {
   if (!labels) labels = false;
 
   //console.log("req.body:", JSON.stringify(req.body));
-res.append('X-reqbody', JSON.stringify(req.body));
-console.log("req.body:", JSON.stringify(req.body));
-res.append('X-reqquery', JSON.stringify(req.query));
-console.log("req.query:", JSON.stringify(req.query));
 
   // curl --data-binary 'A\t66\t69\nc\t82\t41\nL\t54\t35\n' ==>
   //  req.body sample: {"A\t66\t69\nc\t82\t41\nL\t54\t35\n":""}
@@ -99,7 +95,6 @@ console.log("req.query:", JSON.stringify(req.query));
     .replace(/\n$/, "")
     .split('\n');
   //console.log("Points array", pointsArray, "  length:", pointsArray.length);
-console.log("Points array", pointsArray, "  length:", pointsArray.length);
 
   // check first line to determine number of fields;
   // if it's two then no label exist       X<delimiter>Y
@@ -123,9 +118,7 @@ console.log("Points array", pointsArray, "  length:", pointsArray.length);
     }
   }
   //console.log(label_x_y);
-console.log("label_x_y:");
-console.log(label_x_y);
-  console.log('converted', label_x_y.length, 'points to DXF');
+  //console.log('converted', label_x_y.length, 'points to DXF');
 
   var labelSize = req.query.labelSize;
   if (!labelSize) labelSize = findMaxDxDy(label_x_y) * 0.02;
