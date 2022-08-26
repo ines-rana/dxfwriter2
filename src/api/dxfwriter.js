@@ -38,7 +38,7 @@ export default async function corsHandler(req, res) {
 
 
   const Drawing = require('dxf-writer');
-  res.setHeader('X-Version_19', version);
+  res.setHeader('X-Version_20', version);
 
 
 
@@ -121,7 +121,9 @@ console.log("Points array", pointsArray, "  length:", pointsArray.length);
     }
   }
   //console.log(label_x_y);
-  console.log('/: converted', label_x_y.length, 'points to DXF');
+console.log("label_x_y:");
+console.log(label_x_y);
+  console.log('converted', label_x_y.length, 'points to DXF');
 
   var labelSize = req.query.labelSize;
   if (!labelSize) labelSize = findMaxDxDy(label_x_y) * 0.02;
